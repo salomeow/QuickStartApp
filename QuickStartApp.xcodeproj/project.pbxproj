@@ -16,6 +16,8 @@
 		3C67AA611D85BB56001B3455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C67AA5F1D85BB56001B3455 /* LaunchScreen.storyboard */; };
 		3C67AA6C1D85BB56001B3455 /* QuickStartAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA6B1D85BB56001B3455 /* QuickStartAppTests.swift */; };
 		3C67AA771D85BB56001B3455 /* QuickStartAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA761D85BB56001B3455 /* QuickStartAppUITests.swift */; };
+		3CDB8BF61D88086600925373 /* FileSaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF51D88086600925373 /* FileSaveHelper.swift */; };
+		3CDB8BF81D88146D00925373 /* FitbitAPiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */; };
 		B67FF9B4898CA9443B94C3B3 /* Pods_QuickStartApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938F41EB0A2111E108C6F608 /* Pods_QuickStartApp.framework */; };
 		E5AE8778EC81E4B33395A65F /* Pods_QuickStartAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBE2B428BF012B1F7874BE7E /* Pods_QuickStartAppUITests.framework */; };
 /* End PBXBuildFile section */
@@ -53,6 +55,8 @@
 		3C67AA761D85BB56001B3455 /* QuickStartAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartAppUITests.swift; sourceTree = "<group>"; };
 		3C67AA781D85BB56001B3455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C67AA861D866375001B3455 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Alamofire.framework; path = "/Users/ywang/Library/Developer/Xcode/DerivedData/QuickStartApp-dqdqomnwhktrfxbggpgwvuhzwbwh/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<absolute>"; };
+		3CDB8BF51D88086600925373 /* FileSaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSaveHelper.swift; sourceTree = "<group>"; };
+		3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPiHelper.swift; sourceTree = "<group>"; };
 		6F18A251A9B59B34656AA735 /* Pods-QuickStartAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickStartAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickStartAppTests/Pods-QuickStartAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		91A13FBA48BADC4AD74141F7 /* Pods_QuickStartAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickStartAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		938F41EB0A2111E108C6F608 /* Pods_QuickStartApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickStartApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				3C67AA531D85BB56001B3455 /* AppDelegate.swift */,
+				3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */,
+				3CDB8BF51D88086600925373 /* FileSaveHelper.swift */,
 				3C67AA551D85BB56001B3455 /* ViewController.swift */,
 				3C67AA571D85BB56001B3455 /* Main.storyboard */,
 				3C67AA5D1D85BB56001B3455 /* Assets.xcassets */,
@@ -434,7 +440,9 @@
 			files = (
 				3C67AA561D85BB56001B3455 /* ViewController.swift in Sources */,
 				3C67AA5C1D85BB56001B3455 /* QuickStartApp.xcdatamodeld in Sources */,
+				3CDB8BF61D88086600925373 /* FileSaveHelper.swift in Sources */,
 				3C67AA541D85BB56001B3455 /* AppDelegate.swift in Sources */,
+				3CDB8BF81D88146D00925373 /* FitbitAPiHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

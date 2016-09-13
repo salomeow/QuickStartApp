@@ -19,13 +19,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // testing FileSaveHelper
+        let testFile = FileSaveHelper(fileName: "testFile", fileExtension: .TXT, subDirectory: "SavingFiles", directory: .DocumentDirectory)
+        
+        print("Directory exists: \(testFile.directoryExists)")
+        print("File exists: \(testFile.fileExists)")
+        // end testing
     }
 
     @IBAction func FitbitAuthorize(sender: AnyObject) {
         print("button pressed")
         
         // redirect to fitbit authorization page
-        let authPath = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227ZCL&redirect_uri=nusdcp2016://&scope=activity%20heartrate"
+        let authPath = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227ZFK&redirect_uri=nusdcp2016://&scope=activity%20heartrate"
         
         // open authorization page in Safari
         if let authURL:NSURL = NSURL(string: authPath)
