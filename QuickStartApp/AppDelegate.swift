@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,9 +18,87 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        print ("hello")
         return true
     }
-
+    
+    // indicate this app can open url
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        
+        // turn the URL into an array of queryItems
+        func processOAuthStep1Response(url: NSURL)
+        {
+            let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+            var code:String?
+            if let queryItems = components?.queryItems
+            {
+                for queryItem in queryItems
+                {
+                    if (queryItem.name.lowercaseString == "code")
+                    {
+                        code = queryItem.value
+                        print(code)
+                        // code is 2adadea04f9ebc52804dd819c7470b14de6c830e
+                        
+                        let getTokenPath:String = "https://api.fitbit.com/oauth2/token"
+                        let tokenParams = ["client_id":"227ZCL",
+                                           "client_secret":"e617015b19be038a7544069b50b3a6a4",
+                                           "code": code!,
+                                           "grant_type":"authorization_code",
+                                           "redirect_uri":"nusdcp2016://",
+                                           "expires_in":"28800"]
+                        // base64 encode client id and secret
+                        let client_id = "227ZCL"
+                        let client_secret = "e617015b19be038a7544069b50b3a6a4"
+                        let apiLoginString = NSString(format: "%@:%@", client_id, client_secret)
+                        let apiLoginData = apiLoginString.dataUsingEncoding(NSUTF8StringEncoding)!
+                        let base64ApiLoginString = apiLoginData.base64EncodedStringWithOptions([])
+                        
+                        // print(base64ApiLoginString)
+                        
+                        //
+                        let theHeader = "Basic " + base64ApiLoginString
+                        // 2. get access token
+                        Alamofire.request(
+                            .POST,
+                            getTokenPath,
+                            headers: ["Authorization" : theHeader],
+                            parameters: tokenParams)
+                            .responseJSON { (response) -> Void in
+                                // TODO: handle response to extract OAuth token
+                                print(response.response?.statusCode)
+                                print("results below")
+                                print(response.result.value)
+                                
+                                let access_token = response.result.value!["access_token"] as! String
+                                
+                                print(access_token)
+                                
+                                let theAPIHeader: String = "Bearer " + access_token
+                                // 3. make API call for activity
+                                Alamofire.request(
+                                    .GET,
+                                    "https://api.fitbit.com/1/user/-/activities/date/2016-09-10.json",
+                                    //use - afer user/ for current logged in user
+                                    headers: ["Authorization" : theAPIHeader])
+                                    .responseJSON { (response) -> Void in
+                                        print(response.response?.statusCode)
+                                        
+                                        print("this is the gdming fitbit data!")
+                                        print(response.result.value)
+                                }
+                                // end of API call
+                        }
+                        break
+                    }
+                }
+            }
+        }
+        processOAuthStep1Response(url)
+        return true
+    }
+    // boilerplate below
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -106,6 +185,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
