@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         
         // turn the URL into an array of queryItems
-        func processOAuthStep1Response(url: NSURL)
+        func requestFitbitAuthorizationCode(url: NSURL) -> String?
         {
             let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
             var code:String?
@@ -39,55 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     {
                         // authorization code
                         code = queryItem.value
-
-                        
-                        
-                        // 2. get access token
-                        func requestFitbitAccessToken() {
-                            let getTokenPath:String = "https://api.fitbit.com/oauth2/token"
-                            let tokenParams = ["client_id":"227ZFK",
-                                               "client_secret":"47e5382a22367a094b075587fb559f05",
-                                               "code": code!,
-                                               "grant_type":"authorization_code",
-                                               "redirect_uri":"nusdcp2016://",
-                                               "expires_in":"28800"]
-                            // base64 encode client id and secret
-                            let client_id = "227ZFK"
-                            let client_secret = "47e5382a22367a094b075587fb559f05"
-                            let apiLoginString = NSString(format: "%@:%@", client_id, client_secret)
-                            let apiLoginData = apiLoginString.dataUsingEncoding(NSUTF8StringEncoding)!
-                            let base64ApiLoginString = apiLoginData.base64EncodedStringWithOptions([])
-                            
-                            let theHeader = "Basic " + base64ApiLoginString
-                            
-                            Alamofire.request(
-                                .POST,
-                                getTokenPath,
-                                headers: ["Authorization" : theHeader],
-                                parameters: tokenParams)
-                                .responseJSON { (response) -> Void in
-                                    // TODO: handle response to extract OAuth token
-                                    print(response.response?.statusCode)
-                                    let access_token = response.result.value!["access_token"] as! String
-                                    let theAPIHeader: String = "Bearer " + access_token
-                                    // 3. make API call for activity
-                                    // config data storage
-                                    let download_date_list = ["2016-09-04", "2016-09-05", "2016-09-06"]
-                                    FitbitAPIHelper.sharedInstance.downloadFitbitData(download_date_list, header: theAPIHeader)
-                                    // end of API call
-                            }
-                            requestFitbitAccessToken()
-                            
-                        }
-                        
                         break
-                    }
+                    } 
                 }
             }
+            return code
         }
-        processOAuthStep1Response(url)
+        let authorization_code = requestFitbitAuthorizationCode(url)
+        FitbitAPIHelper.sharedInstance.requestFitbitAccessToken(authorization_code)
         return true
     }
+    
     // boilerplate below
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
