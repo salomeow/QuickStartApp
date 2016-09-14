@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zjd-8x-okh">
-                                <rect key="frame" x="269" y="269" width="81" height="61"/>
-                                <state key="normal" title="FitbitButton"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ZJ-9T-O61">
+                                <rect key="frame" x="179" y="210" width="124" height="102"/>
+                                <state key="normal" title="SyncFitbit"/>
                                 <connections>
-                                    <action selector="FitbitAuthorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tmp-nz-nx5"/>
+                                    <action selector="SyncFitbit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IB7-j3-aqw"/>
                                 </connections>
                             </button>
                         </subviews>

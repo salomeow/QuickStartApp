@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
@@ -27,34 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // indicate this app can open url
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool
     {
-        print("start application open url")
-        print(url)
         // 3: get authorization code
-        print("baba happens after open url in application open url")
         FitbitAPIHelper.sharedInstance.getFitbitAuthorizationCode(url)
-        
-                
-        // 5: make fitbit api call
         print("end application open url")
         return true
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // boilerplate below
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

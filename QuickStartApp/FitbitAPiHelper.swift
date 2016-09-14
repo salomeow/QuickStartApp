@@ -10,18 +10,17 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-// TODO: error cases
-// TODO: store and retrieve stored token
-// TODO: refresh token
-// TODO: check list of files >> write a file for downloaded files
-// TODO: NSDate >> generate a list of files
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+// TODO: store and retrieve stored token from phone                                           //
+// TODO: refresh token                                                                        //
+// TODO: check list of files >> write a file for downloaded files                             //
+// TODO: NSDate >> generate a list of files                                                   //
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 class FitbitAPIHelper
 {
     static let sharedInstance = FitbitAPIHelper()
+    var OAuthTokenCompletionHandler:(NSError? -> Void)?
     
     // declare credentials
     let client_id = "227ZFK"
@@ -29,13 +28,72 @@ class FitbitAPIHelper
     let redirect_url = "nusdcp2016://"
     
     // store token
-    var authorizationCode: String?
     var accessToken: String?
     var refreshToken: String?
     
     // API call list
-    let download_date_list = ["2016-09-03", "2016-09-04", "2016-09-05", "2016-09-06"]
-
+    let download_date_list = ["2016-09-02", "2016-09-03", "2016-09-04", "2016-09-05", "2016-09-06"]
+    
+    // 5: make API call
+    // TODO: need a completion handler
+    func getFitbitData(completionHandler: (String?, NSError?) -> Void)
+    {
+        
+        let theAPIHeader: String = "Bearer " + self.accessToken!
+        let download_step_foldername = "step_data"
+        let download_heart_foldername = "heart_data"
+        var download_step_filename: String
+        var download_heart_filename: String
+        
+        for download_date in download_date_list {
+            download_step_filename = "step" + download_date
+            download_heart_filename = "heart" + download_date
+            
+            // request intraday step data
+            Alamofire.request(.GET,
+                "https://api.fitbit.com/1/user/-/activities/steps/date/\(download_date)/1d/15min.json",
+                headers: ["Authorization" : theAPIHeader])
+                .validate()
+                .responseJSON
+                { (response) -> Void in
+                    if let anError = response.result.error
+                    {
+                        print(anError)
+                        completionHandler(nil, anError)
+                        return
+                    }
+                    print(response.response?.statusCode)
+                    if let stepJSON = response.result.value {
+                        // save json file locally
+                        self.saveJSONandCheck(stepJSON, download_step_filename, download_step_foldername)
+                    }
+            }
+            
+            // request intraday heartrate data
+            Alamofire.request(.GET,
+                "https://api.fitbit.com/1/user/-/activities/heart/date/\(download_date)/1d/15min.json",
+                headers: ["Authorization" : theAPIHeader])
+                .validate()
+                .responseJSON
+                { (response) -> Void in
+                    if let anError = response.result.error
+                    {
+                        print(anError)
+                        completionHandler(nil, anError)
+                        return
+                    }
+                    print(response.response?.statusCode)
+                    if let heartJSON = response.result.value
+                    {
+                        // save json file locally
+                        self.saveJSONandCheck(heartJSON, download_heart_filename, download_heart_foldername)
+                    }
+            }
+        }
+        completionHandler("success", nil)
+        
+    }
+    
     // 1: check if access token exists
     func hasToken() -> Bool
     {
@@ -77,65 +135,97 @@ class FitbitAPIHelper
                 {
                     // authorization code
                     code = queryItem.value
-                    self.authorizationCode = code
                     break
                 }
             }
         }
-        print("request access token in getFitbitAuthorizationCode function")
+        
         // 4: exchange authorization code for access token
-        FitbitAPIHelper.sharedInstance.getFitbitAccessToken
-            { (str, error) in
-                if str != nil
-                {
-                // Use str value
-                } else
-                {
-                // Handle error / nil value
-                }
+        if let authorizationCode = code
+        {
+            // token request path and parameters
+            let getTokenPath:String = "https://api.fitbit.com/oauth2/token"
+            let tokenParams = ["client_id": client_id,
+                               "client_secret":client_secret,
+                               "code": authorizationCode,
+                               "grant_type":"authorization_code",
+                               "redirect_uri":redirect_url,
+                               "expires_in":"28800"]
+            // base64 encode client id and secret
+            let apiLoginString = NSString(format: "%@:%@", client_id, client_secret)
+            let apiLoginData = apiLoginString.dataUsingEncoding(NSUTF8StringEncoding)!
+            let base64ApiLoginString = apiLoginData.base64EncodedStringWithOptions([])
+            // header containing authorization code used for requesting access token
+            let theHeader = "Basic " + base64ApiLoginString
+            Alamofire.request(
+                .POST,
+                getTokenPath,
+                headers: ["Authorization" : theHeader],
+                parameters: tokenParams)
+                .responseJSON { (response) -> Void in
+                    if let anError = response.result.error
+                    {
+                        print(anError)
+                        if let completionHandler = self.OAuthTokenCompletionHandler
+                        {
+                            let nOAuthError = NSError(domain: "AlamofireErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Could not obtain an OAuth token", NSLocalizedRecoverySuggestionErrorKey: "Please retry your request"])
+                            completionHandler(nOAuthError)
+                        }
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        defaults.setBool(false, forKey: "loadingOAuthToken")
+                        return
+                    }
+                    if let receivedToken = response.result.value!["access_token"] as? String
+                    {
+                        print(response.response?.statusCode)
+                        self.accessToken = receivedToken
+                        self.refreshToken = response.result.value!["refresh_token"] as? String
+                        print("access token stored:  ")
+                        print(self.accessToken)
+                        print("check if hasToken() updated. the current value is: ")
+                        print(self.hasToken())
+                        self.getFitbitData
+                            { (str, error) in
+                                if let anError = error { print(anError)} else {print(str)}
+                        }
+                        
+                        
+                    }
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setBool(false, forKey: "loadingOAuthToken")
+                    
+                    if self.hasToken()
+                    {
+                        if let completionHandler = self.OAuthTokenCompletionHandler
+                        {
+                            completionHandler(nil)
+                        }
+                    }
+                    else
+                    {
+                        if let completionHandler = self.OAuthTokenCompletionHandler
+                        {
+                            let nOAuthError = NSError(domain: "AlamofireErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Could not obtain an OAuth token", NSLocalizedRecoverySuggestionErrorKey: "Please retry your request"])
+                            completionHandler(nOAuthError)
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    // 5: make Fitbit API call, request data, and store data locally
+                    // self.getFitbitData()
+                    // completionHandler(str, response.result.error)
+                    
+            }
+            
+        } else // no received code
+        {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setBool(false, forKey: "loadingOAuthToken")
         }
-
     }
     
-    // 4: exchange authorizatin code for access token
-    func getFitbitAccessToken(completionHandler: (String?, NSError?) -> ())
-    {
-        // token request path and parameters
-        let getTokenPath:String = "https://api.fitbit.com/oauth2/token"
-        let tokenParams = ["client_id": client_id,
-                           "client_secret":client_secret,
-                           "code": authorizationCode!,
-                           "grant_type":"authorization_code",
-                           "redirect_uri":redirect_url,
-                           "expires_in":"28800"]
-        // base64 encode client id and secret
-        let apiLoginString = NSString(format: "%@:%@", client_id, client_secret)
-        let apiLoginData = apiLoginString.dataUsingEncoding(NSUTF8StringEncoding)!
-        let base64ApiLoginString = apiLoginData.base64EncodedStringWithOptions([])
-        // header containing authorization code used for requesting access token
-        let theHeader = "Basic " + base64ApiLoginString
-        Alamofire.request(
-            .POST,
-            getTokenPath,
-            headers: ["Authorization" : theHeader],
-            parameters: tokenParams)
-            .responseJSON { (response) -> Void in
-                // TODO: handle response to extract OAuth token
-                print(response.response?.statusCode)
-                print(response.result.value)
-                let str = response.result.value!["access_token"] as? String
-                self.accessToken = str
-                self.refreshToken = response.result.value!["refresh_token"] as? String
-                
-                // 5: make Fitbit API call, request data, and store data locally
-                self.getFitbitData()
-                completionHandler(str, response.result.error)
-                
-        }
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        defaults.setBool(false, forKey: "loadingOAuthToken")
-    }
-
     // helper function for 5
     func saveJSONandCheck(JSONfile: AnyObject, _ file_name: String, _ folder_name: String) {
         let savedJSON = FileSaveHelper(fileName:file_name, fileExtension: .JSON, subDirectory: folder_name, directory: .DocumentDirectory)
@@ -148,52 +238,6 @@ class FitbitAPIHelper
         print("JSON file exists: \(savedJSON.fileExists)")
     }
     
-    // 5: make API call 
-    // TODO: need a completion handler
-    func getFitbitData()
-    {
-        
-        let theAPIHeader: String = "Bearer " + self.accessToken!
-        var requestPath: String
-        for download_date in download_date_list {
-            let download_step_filename = "step" + download_date
-            let download_step_foldername = "step_data"
-            let download_heart_filename = "heart" + download_date
-            let download_heart_foldername = "heart_data"
-            // request intraday step data
-            Alamofire.request(
-                .GET,
-                "https://api.fitbit.com/1/user/-/activities/steps/date/\(download_date)/1d/15min.json",
-                //use - afer user/ for current logged in user
-                headers: ["Authorization" : theAPIHeader])
-                .validate()
-                .responseJSON { (response) -> Void in
-                    print(response.response?.statusCode)
-                    if let stepJSON = response.result.value {
-                        // save json file locally
-                        self.saveJSONandCheck(stepJSON, download_step_filename, download_step_foldername)
-                    }
-            }
-            
-            // request intraday heartrate data
-            requestPath = "https://api.fitbit.com/1/user/-/activities/heart/date/\(download_date)/1d/15min.json"
-            Alamofire.request(
-                .GET,
-                requestPath,
-                //use - afer user/ for current logged in user
-                headers: ["Authorization" : theAPIHeader])
-                .validate()
-                .responseJSON { (response) -> Void in
-                    print(response.response?.statusCode)
-                    if let heartJSON = response.result.value
-                    {
-                        // save json file locally
-                        self.saveJSONandCheck(heartJSON, download_heart_filename, download_heart_foldername)
-                    }
-            }
-            
-        }
-        
-    }
-
+    
+    
 }
