@@ -16,39 +16,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    {
         // Override point for customization after application launch.
-        
+        // first function to execute when the app is launched.
         print ("hello")
         return true
     }
     
     // indicate this app can open url
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool
+    {
+        print("start application open url")
+        print(url)
+        // 3: get authorization code
+        print("baba happens after open url in application open url")
+        FitbitAPIHelper.sharedInstance.getFitbitAuthorizationCode(url)
         
-        // turn the URL into an array of queryItems
-        func requestFitbitAuthorizationCode(url: NSURL) -> String?
-        {
-            let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
-            var code:String?
-            if let queryItems = components?.queryItems
-            {
-                for queryItem in queryItems
-                {
-                    if (queryItem.name.lowercaseString == "code")
-                    {
-                        // authorization code
-                        code = queryItem.value
-                        break
-                    } 
-                }
-            }
-            return code
-        }
-        let authorization_code = requestFitbitAuthorizationCode(url)
-        FitbitAPIHelper.sharedInstance.requestFitbitAccessToken(authorization_code)
+                
+        // 5: make fitbit api call
+        print("end application open url")
         return true
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // boilerplate below
     func applicationWillResignActive(application: UIApplication) {

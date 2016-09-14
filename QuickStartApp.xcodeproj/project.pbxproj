@@ -136,9 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				3C67AA531D85BB56001B3455 /* AppDelegate.swift */,
+				3C67AA551D85BB56001B3455 /* ViewController.swift */,
 				3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */,
 				3CDB8BF51D88086600925373 /* FileSaveHelper.swift */,
-				3C67AA551D85BB56001B3455 /* ViewController.swift */,
 				3C67AA571D85BB56001B3455 /* Main.storyboard */,
 				3C67AA5D1D85BB56001B3455 /* Assets.xcassets */,
 				3C67AA5F1D85BB56001B3455 /* LaunchScreen.storyboard */,
