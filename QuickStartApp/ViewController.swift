@@ -21,7 +21,8 @@ class ViewController: UIViewController
     override func viewWillAppear(animated: Bool)
     {
         print("start viewWillAppear")
-        super.viewWillAppear(animated)
+        super.viewWillAppear(animated) // original line
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         print("check if token is loading, result below: ")
         print(defaults.boolForKey("loadingOAuthToken"))
@@ -41,13 +42,19 @@ class ViewController: UIViewController
         {
             print("else of loadInitialData")
             FitbitAPIHelper.sharedInstance.getFitbitData
-            { (str, error) in
+            { (json, filename, foldername, error) in
                 if let anError = error
                 {
                     print(anError)
                 } else
                 {
-                    print(str)
+                    print(json)
+                    // store data
+                    // notification data is stored
+                    // NSnotification, notify other code something is completed
+                    FitbitAPIHelper.sharedInstance.saveJSONandCheck(json!, filename!, foldername!)
+                    NSNotificationCenter.defaultCenter().postNotificationName("data has been stored", object: json)
+                    
                 }
             }
         }
