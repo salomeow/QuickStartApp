@@ -79,16 +79,16 @@ class FileSaveHelper {
     }
     
     //1
-    func saveFile(string fileContents:String) throws{
-        do {
-            //2
-            try fileContents.writeToFile(fullyQualifiedPath, atomically: true, encoding: NSUTF8StringEncoding)
-        }
-        catch  {
-            //3
-            throw error
-        }
-    }
+//    func saveFile(string fileContents:String) throws{
+//        do {
+//            //2
+//            try fileContents.writeToFile(fullyQualifiedPath, atomically: true, encoding: NSUTF8StringEncoding)
+//        }
+//        catch  {
+//            //3
+//            throw error
+//        }
+//    }
     
     //for json file
     //1
@@ -97,7 +97,9 @@ class FileSaveHelper {
             //2
             let jsonData = try convertObjectToData(dataForJson)
             if !fileManager.createFileAtPath(fullyQualifiedPath, contents: jsonData, attributes: nil){
+                print(fullyQualifiedPath)
                 throw FileErrors.FileNotSaved
+                
             }
         } catch {
             //3

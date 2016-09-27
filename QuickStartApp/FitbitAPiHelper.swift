@@ -268,16 +268,22 @@ class FitbitAPIHelper
                         print(self.accessToken)
                         print("check if hasToken() updated. the current value is: ")
                         print(self.hasToken())
-                        self.getFitbitData ()
+                        self.getFitbitData
                             { (json, filename, foldername, error) in
                                 if let anError = error
-                                { print(anError)
+                                {
+                                    print(anError)
                                 } else
-                                {print(json)
+                                {
+                                    print(json!)
+                                    // store data
+                                    // notification data is stored
+                                    // NSnotification, notify other code something is completed
+                                    self.saveJSONandCheck(json!, filename!, foldername!)
+                                    NSNotificationCenter.defaultCenter().postNotificationName("data has been stored", object: json)
+                                    
                                 }
                         }
-                        
-                        
                     }
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setBool(false, forKey: "loadingOAuthToken")
@@ -324,7 +330,7 @@ class FitbitAPIHelper
         catch {
             print(error)
         }
-        print("JSON file exists: \(savedJSON.fileExists)")
+        // print("JSON file exists: \(savedJSON.fileExists)")
     }
     
     

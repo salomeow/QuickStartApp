@@ -48,7 +48,7 @@ class ViewController: UIViewController
                     print(anError)
                 } else
                 {
-                    print(json)
+                    print(json!)
                     // store data
                     // notification data is stored
                     // NSnotification, notify other code something is completed
