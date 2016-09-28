@@ -5,8 +5,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'QuickStartApp' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-   pod 'Alamofire', '3.0'
-   pod 'SwiftyJSON'
+   pod 'Alamofire', '~> 4.0'
+   pod 'SwiftyJSON', '~> 3.0.0'
 
   # Pods for QuickStartApp
 

@@ -15,21 +15,16 @@ class ViewController: UIViewController
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print("end view did load")
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
-        print("start viewWillAppear")
         super.viewWillAppear(animated) // original line
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        print("check if token is loading, result below: ")
-        print(defaults.boolForKey("loadingOAuthToken"))
-        print("token is")
-        print(FitbitAPIHelper.sharedInstance.accessToken)
+        /*let defaults = UserDefaults.standard
+        print("check if token is loading: \(defaults.bool(forKey: "loadingOAuthToken"))")
+        print("token is \(FitbitAPIHelper.sharedInstance.accessToken)")*/
         loadInitialData()
-        print("end viewWillAppear")
     }
     
     func loadInitialData()
@@ -40,30 +35,54 @@ class ViewController: UIViewController
         }
         else
         {
-            print("else of loadInitialData")
-            FitbitAPIHelper.sharedInstance.getFitbitData
-            { (json, filename, foldername, error) in
-                if let anError = error
-                {
-                    print(anError)
-                } else
-                {
-                    print(json!)
-                    // store data
-                    // notification data is stored
-                    // NSnotification, notify other code something is completed
-                    FitbitAPIHelper.sharedInstance.saveJSONandCheck(json!, filename!, foldername!)
-                    NSNotificationCenter.defaultCenter().postNotificationName("data has been stored", object: json)
-                    
+            func stepLoop () {
+                FitbitAPIHelper.sharedInstance.getFitbitStepData
+                    { (counter, error) in
+                        if let anError = error
+                        {
+                            print(anError)
+                        } else
+                        {
+                            let loop_length: Int = FitbitAPIHelper.sharedInstance.download_date_list.count - 1
+                            if counter! <= loop_length {
+                                stepLoop()
+                            }
+                            if counter == loop_length {
+                                FitbitAPIHelper.sharedInstance.download_step_counter = 0
+                            }
+                        }
+                        /*NotificationCenter.default.post(name: Notification.Name(rawValue: "data has been stored"), object: json)*/
                 }
             }
+            stepLoop()
+            func heartLoop () {
+                FitbitAPIHelper.sharedInstance.getFitbitHeartData
+                    { (counter, error) in
+                        if let anError = error
+                        {
+                            print(anError)
+                        } else
+                        {
+                            let loop_length: Int = FitbitAPIHelper.sharedInstance.download_date_list.count - 1
+                            if counter! <= loop_length {
+                                heartLoop()
+                            }
+                            if counter == loop_length {
+                                FitbitAPIHelper.sharedInstance.download_heart_counter = 0
+                                print("Now heart file downloading counter is set to: \(FitbitAPIHelper.sharedInstance.download_heart_counter)")
+                            }
+                        }
+                        /*NotificationCenter.default.post(name: Notification.Name(rawValue: "data has been stored"), object: json)*/
+                }
+            }
+            heartLoop()
         }
     }
     
-    @IBAction func SyncFitbit(sender: AnyObject)
+    @IBAction func SyncFitbit(_ sender: AnyObject)
     {
         // press button to sync fitbit data. note that the rate limit is 150.check response header for number of requests left and countdown to next 150 requests.
-        loadInitialData()
+
     }
     
     override func didReceiveMemoryWarning()

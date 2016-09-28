@@ -16,167 +16,94 @@ import SwiftyJSON
 // TODO: check list of files >> write a file for downloaded files                             //
 // TODO: NSDate >> generate a list of files                                                   //
 ////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-//func > (left: NSDate, right: NSDate) -> Bool {
-//    return left.compare(right) == .OrderedDescending
-//}
-//
-//extension NSCalendar {
-//    func dateRange(startDate startDate: NSDate, endDate: NSDate, stepUnits: NSCalendarUnit, stepValue: Int) -> DateRange {
-//        let dateRange = DateRange(calendar: self, startDate: startDate, endDate: endDate,
-//                                  stepUnits: stepUnits, stepValue: stepValue, multiplier: 0)
-//        return dateRange
-//    }
-//}
-//
-//struct DateRange :SequenceType {
-//    
-//    var calendar: NSCalendar
-//    var startDate: NSDate
-//    var endDate: NSDate
-//    var stepUnits: NSCalendarUnit
-//    var stepValue: Int
-//    private var multiplier: Int
-//    
-//    func generate() -> Generator {
-//        return Generator(range: self)
-//    }
-//    
-//    struct Generator: GeneratorType {
-//        
-//        var range: DateRange
-//        
-//        mutating func next() -> NSDate? {
-//            guard let nextDate = range.calendar.dateByAddingUnit(range.stepUnits,
-//                                                                 value: range.stepValue * range.multiplier,
-//                                                                 toDate: range.startDate,
-//                                                                 options: []) else {
-//                                                                    return nil
-//            }
-//            if nextDate > range.endDate {
-//                return nil
-//            }
-//            else {
-//                range.multiplier += 1
-//                return nextDate
-//            }
-//        }
-//    }
-//}
-//
 
 
 class FitbitAPIHelper
 {
     static let sharedInstance = FitbitAPIHelper()
-    var OAuthTokenCompletionHandler:(NSError? -> Void)?
+    var OAuthTokenCompletionHandler:((NSError?) -> Void)?
     
     // declare credentials
     let client_id = "227ZFK"
     let client_secret = "47e5382a22367a094b075587fb559f05"
     let redirect_url = "nusdcp2016://"
-    
+    let FitbitauthPath = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227ZFK&redirect_uri=nusdcp2016://&scope=activity%20heartrate"
+    let FitbitTokenPath = "https://api.fitbit.com/oauth2/token"
     // store token
     var accessToken: String?
     var refreshToken: String?
     
     // API call list
     // 4 weeks data
+    var download_step_counter: Int = 0
+    var download_heart_counter: Int = 0
     let download_date_list = ["2016-09-05", "2016-09-06", "2016-09-07", "2016-09-08", "2016-09-09",
-                              "2016-09-10", "2016-09-11"]
+                              "2016-09-10", "2016-09-11", "2016-09-12", "2016-09-13", "2016-09-14",
+                              "2016-09-15", "2016-09-16", "2016-09-17", "2016-09-18", "2016-09-19",
+                              "2016-09-20", "2016-09-21", "2016-09-22", "2016-09-23", "2016-09-24", "2016-09-25"]
     
     // 5: make API call
     // TODO: need a completion handler
-    func getFitbitData(completionHandler: (NSDictionary?, String?, String?, NSError?) -> Void)
+    func getFitbitStepData(_ completionHandler: @escaping (Int?, NSError?) -> Void)
     {
-        
         let theAPIHeader: String = "Bearer " + self.accessToken!
-        let download_step_foldername = "step_data"
-        let download_heart_foldername = "heart_data"
         var download_step_filename: String
+
+        download_step_filename = "step" + download_date_list[self.download_step_counter]
+        Alamofire.request("https://api.fitbit.com/1/user/-/activities/steps/date/\(download_date_list[self.download_step_counter])/1d/15min.json", method: .get, headers: ["Authorization" : theAPIHeader]).validate().responseJSON
+            { (response) -> Void in
+                if let anError = response.result.error
+                {
+                    print(anError)
+                    completionHandler(nil, anError as NSError)
+                    // print(response.response?.allHeaderFields)
+                    return
+                }
+                // print(response.response?.statusCode)
+                if let stepJSON = response.result.value {
+                    self.download_step_counter += 1
+                    let savedData = FileSaveHelper(fileName:download_step_filename, fileExtension: .JSON, subDirectory: "FitbitData", directory: .documentDirectory)
+                    do {
+                        try savedData.saveFile(dataForJson: stepJSON as AnyObject)
+                    }
+                    catch {
+                        print(error)
+                    }
+                    completionHandler(self.download_step_counter, nil)
+                }
+        }
+    }
+    
+    func getFitbitHeartData(_ completionHandler: @escaping (Int?, NSError?) -> Void)
+    {
+        let theAPIHeader: String = "Bearer " + self.accessToken!
         var download_heart_filename: String
         
-        ////////////////////////////////////////////////////////////////////////////////////////////
-//        // Usage:
-//        func testDateRange() -> DateRange {
-//            
-//            let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-//            let startDate = NSDate(timeIntervalSinceNow: -(24*60*60*10-1))
-//            let endDate = NSDate(timeIntervalSinceNow: 0)
-//            let dateRange = calendar.dateRange(startDate: startDate,
-//                                               endDate: endDate,
-//                                               stepUnits: .Day,
-//                                               stepValue: 1)
-//            return dateRange
-//        }
-//        
-//        let dates = testDateRange()
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        var download_date: String
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        
-        for download_date in download_date_list {
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // download_date = dateFormatter.stringFromDate(date)
-            // print(download_date)
-            ////////////////////////////////////////////////////////////////////////////////////////
-            
-            download_step_filename = "step" + download_date
-            download_heart_filename = "heart" + download_date
-            
-            // request intraday step data
-            Alamofire.request(.GET,
-                "https://api.fitbit.com/1/user/-/activities/steps/date/\(download_date)/1d/15min.json",
-                headers: ["Authorization" : theAPIHeader])
-                .validate()
-                .responseJSON
-                { (response) -> Void in
-                    
-                    if let anError = response.result.error
-                    {
-                        print(anError)
-                        print(response.response?.allHeaderFields)
-                        completionHandler(nil, nil, nil, anError)
-                        return
+        download_heart_filename = "heart" + download_date_list[self.download_heart_counter]
+        Alamofire.request("https://api.fitbit.com/1/user/-/activities/heart/date/\(download_date_list[self.download_heart_counter])/1d/15min.json", method: .get, headers: ["Authorization" : theAPIHeader]).validate().responseJSON
+            { (response) -> Void in
+                if let anError = response.result.error
+                {
+                    print(anError)
+                    completionHandler(nil, anError as NSError)
+                    // print(response.response?.allHeaderFields)
+                    return
+                }
+                // print(response.response?.statusCode)
+                if let heartJSON = response.result.value {
+                    self.download_step_counter += 1
+                    let savedData = FileSaveHelper(fileName:download_heart_filename, fileExtension: .JSON, subDirectory: "FitbitData", directory: .documentDirectory)
+                    do {
+                        try savedData.saveFile(dataForJson: heartJSON as AnyObject)
                     }
-                    print(response.response?.statusCode)
-                    if let stepJSON = response.result.value {
-                        // print(download_date)
-                        // print(stepJSON)
-                        completionHandler(stepJSON as? NSDictionary, download_step_filename, download_step_foldername, nil)
-                        // save json file locally
-                        // self.saveJSONandCheck(stepJSON, download_step_filename, download_step_foldername)
+                    catch {
+                        print(error)
                     }
-            }
-            
-            // request intraday heartrate data
-//            Alamofire.request(.GET,
-//                "https://api.fitbit.com/1/user/-/activities/heart/date/\(download_date)/1d/15min.json",
-//                headers: ["Authorization" : theAPIHeader])
-//                .validate()
-//                .responseJSON
-//                { (response) -> Void in
-//                    if let anError = response.result.error
-//                    {
-//                        print(anError)
-//                        completionHandler(nil, anError)
-//                        return
-//                    }
-//                    print(response.response?.statusCode)
-//                    if let heartJSON = response.result.value
-//                    {
-//                        print(download_date)
-//                        print(heartJSON)
-//                        // save json file locally
-//                        // self.saveJSONandCheck(heartJSON, download_heart_filename, download_heart_foldername)
-//                    }
-//            }
+                    completionHandler(self.download_heart_counter, nil)
+                }
         }
-        // completionHandler("success", nil)
-        
     }
+
     
     // 1: check if access token exists
     func hasToken() -> Bool
@@ -193,29 +120,27 @@ class FitbitAPIHelper
     func startFitbitLogin()
     {
         print("start fitbit login process")
-        let authPath: String = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227ZFK&redirect_uri=nusdcp2016://&scope=activity%20heartrate"
-        if let authURL: NSURL = NSURL(string: authPath)
+        if let authURL: URL = URL(string: FitbitauthPath)
         {
-            // set defaults.boolForKey("loadingOAuthToken") here
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setBool(true, forKey: "loadingOAuthToken")
+            /*/ set defaults.boolForKey("loadingOAuthToken") here
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: "loadingOAuthToken")*/
             // open authorization page
-            print("opening authorization page")
-            UIApplication.sharedApplication().openURL(authURL)
+            UIApplication.shared.openURL(authURL)
         }
     }
     
     // 3: get authorization code
-    func getFitbitAuthorizationCode(url: NSURL) //processOauthStep1response
+    func startFitbitOAuth2Flow(_ url: URL) //processOauthStep1response
     {
         print("getFitbitAuthorizationCode is executing")
-        let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         var code:String?
         if let queryItems = components?.queryItems
         {
             for queryItem in queryItems
             {
-                if (queryItem.name.lowercaseString == "code")
+                if (queryItem.name.lowercased() == "code")
                 {
                     // authorization code
                     code = queryItem.value
@@ -228,7 +153,7 @@ class FitbitAPIHelper
         if let authorizationCode = code
         {
             // token request path and parameters
-            let getTokenPath:String = "https://api.fitbit.com/oauth2/token"
+            let getTokenPath:String = FitbitTokenPath
             let tokenParams = ["client_id": client_id,
                                "client_secret":client_secret,
                                "code": authorizationCode,
@@ -237,16 +162,13 @@ class FitbitAPIHelper
                                "expires_in":"28800"]
             // base64 encode client id and secret
             let apiLoginString = NSString(format: "%@:%@", client_id, client_secret)
-            let apiLoginData = apiLoginString.dataUsingEncoding(NSUTF8StringEncoding)!
-            let base64ApiLoginString = apiLoginData.base64EncodedStringWithOptions([])
+            let apiLoginData = apiLoginString.data(using: String.Encoding.utf8.rawValue)!
+            let base64ApiLoginString = apiLoginData.base64EncodedString(options: [])
             // header containing authorization code used for requesting access token
             let theHeader = "Basic " + base64ApiLoginString
-            Alamofire.request(
-                .POST,
-                getTokenPath,
-                headers: ["Authorization" : theHeader],
-                parameters: tokenParams)
-                .responseJSON { (response) -> Void in
+            Alamofire.request(getTokenPath, method: .post, parameters: tokenParams, encoding: URLEncoding.default, headers: ["Authorization" : theHeader]).responseJSON {
+                response in
+                    print(response.result.value)
                     if let anError = response.result.error
                     {
                         print(anError)
@@ -255,38 +177,62 @@ class FitbitAPIHelper
                             let nOAuthError = NSError(domain: "AlamofireErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Could not obtain an OAuth token", NSLocalizedRecoverySuggestionErrorKey: "Please retry your request"])
                             completionHandler(nOAuthError)
                         }
-                        let defaults = NSUserDefaults.standardUserDefaults()
-                        defaults.setBool(false, forKey: "loadingOAuthToken")
+                        let defaults = UserDefaults.standard
+                        defaults.set(false, forKey: "loadingOAuthToken")
                         return
                     }
-                    if let receivedToken = response.result.value!["access_token"] as? String
+                    if let Tokens = response.result.value as? NSDictionary
                     {
                         print(response.response?.statusCode)
-                        self.accessToken = receivedToken
-                        self.refreshToken = response.result.value!["refresh_token"] as? String
-                        print("access token stored:  ")
-                        print(self.accessToken)
-                        print("check if hasToken() updated. the current value is: ")
-                        print(self.hasToken())
-                        self.getFitbitData
-                            { (json, filename, foldername, error) in
-                                if let anError = error
-                                {
-                                    print(anError)
-                                } else
-                                {
-                                    print(json!)
-                                    // store data
-                                    // notification data is stored
-                                    // NSnotification, notify other code something is completed
-                                    self.saveJSONandCheck(json!, filename!, foldername!)
-                                    NSNotificationCenter.defaultCenter().postNotificationName("data has been stored", object: json)
-                                    
-                                }
+                        print(Tokens)
+                        self.accessToken = Tokens["access_token"] as? String
+                        self.refreshToken = Tokens["refresh_token"] as? String
+                        print("check if hasToken() updated. the current value is: \(self.hasToken())")
+                        
+                        func stepLoop () {
+                            self.getFitbitStepData
+                                { (counter, error) in
+                                    if let anError = error
+                                    {
+                                        print(anError)
+                                    } else
+                                    {
+                                        let loop_length: Int = FitbitAPIHelper.sharedInstance.download_date_list.count - 1
+                                        if counter! <= loop_length {
+                                            stepLoop()
+                                        }
+                                        if counter == loop_length {
+                                            FitbitAPIHelper.sharedInstance.download_step_counter = 0
+                                        }
+                                    }
+                                    /*NotificationCenter.default.post(name: Notification.Name(rawValue: "data has been stored"), object: json)*/
+                            }
                         }
+                        stepLoop()
+                        func heartLoop () {
+                            self.getFitbitHeartData
+                                { (counter, error) in
+                                    if let anError = error
+                                    {
+                                        print(anError)
+                                    } else
+                                    {
+                                        let loop_length: Int = FitbitAPIHelper.sharedInstance.download_date_list.count - 1
+                                        if counter! <= loop_length {
+                                            heartLoop()
+                                        }
+                                        if counter == loop_length {
+                                            FitbitAPIHelper.sharedInstance.download_heart_counter = 0
+                                            print("Now heart file downloading counter is set to: \(FitbitAPIHelper.sharedInstance.download_heart_counter)")
+                                        }
+                                    }
+                                    /*NotificationCenter.default.post(name: Notification.Name(rawValue: "data has been stored"), object: json)*/
+                            }
+                        }
+                        heartLoop()
                     }
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setBool(false, forKey: "loadingOAuthToken")
+                    let defaults = UserDefaults.standard
+                    defaults.set(false, forKey: "loadingOAuthToken")
                     
                     if self.hasToken()
                     {
@@ -315,15 +261,15 @@ class FitbitAPIHelper
             
         } else // no received code
         {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setBool(false, forKey: "loadingOAuthToken")
+            let defaults = UserDefaults.standard
+            defaults.set(false, forKey: "loadingOAuthToken")
         }
     }
     
     // helper function for 5
     
-    func saveJSONandCheck(JSONfile: AnyObject, _ file_name: String, _ folder_name: String) {
-        let savedJSON = FileSaveHelper(fileName:file_name, fileExtension: .JSON, subDirectory: folder_name, directory: .DocumentDirectory)
+    func saveJSONandCheck(_ JSONfile: AnyObject, _ file_name: String) {
+        let savedJSON = FileSaveHelper(fileName:file_name, fileExtension: .JSON, subDirectory: "FitbitData", directory: .documentDirectory)
         do {
             try savedJSON.saveFile(dataForJson: JSONfile)
         }

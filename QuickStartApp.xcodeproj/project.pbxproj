@@ -18,6 +18,7 @@
 		3C67AA771D85BB56001B3455 /* QuickStartAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA761D85BB56001B3455 /* QuickStartAppUITests.swift */; };
 		3CDB8BF61D88086600925373 /* FileSaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF51D88086600925373 /* FileSaveHelper.swift */; };
 		3CDB8BF81D88146D00925373 /* FitbitAPiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */; };
+		3CEE42251D9C1382007C7109 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE42241D9C1382007C7109 /* DateHelper.swift */; };
 		B67FF9B4898CA9443B94C3B3 /* Pods_QuickStartApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938F41EB0A2111E108C6F608 /* Pods_QuickStartApp.framework */; };
 		E5AE8778EC81E4B33395A65F /* Pods_QuickStartAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBE2B428BF012B1F7874BE7E /* Pods_QuickStartAppUITests.framework */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		3C67AA861D866375001B3455 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Alamofire.framework; path = "/Users/ywang/Library/Developer/Xcode/DerivedData/QuickStartApp-dqdqomnwhktrfxbggpgwvuhzwbwh/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<absolute>"; };
 		3CDB8BF51D88086600925373 /* FileSaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSaveHelper.swift; sourceTree = "<group>"; };
 		3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPiHelper.swift; sourceTree = "<group>"; };
+		3CEE42241D9C1382007C7109 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		6F18A251A9B59B34656AA735 /* Pods-QuickStartAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickStartAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickStartAppTests/Pods-QuickStartAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		91A13FBA48BADC4AD74141F7 /* Pods_QuickStartAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickStartAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		938F41EB0A2111E108C6F608 /* Pods_QuickStartApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickStartApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +140,7 @@
 				3C67AA531D85BB56001B3455 /* AppDelegate.swift */,
 				3C67AA551D85BB56001B3455 /* ViewController.swift */,
 				3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */,
+				3CEE42241D9C1382007C7109 /* DateHelper.swift */,
 				3CDB8BF51D88086600925373 /* FileSaveHelper.swift */,
 				3C67AA571D85BB56001B3455 /* Main.storyboard */,
 				3C67AA5D1D85BB56001B3455 /* Assets.xcassets */,
@@ -229,6 +232,7 @@
 				3C67AA6F1D85BB56001B3455 /* Frameworks */,
 				3C67AA701D85BB56001B3455 /* Resources */,
 				885528094ADC802F82D74C67 /* [CP] Copy Pods Resources */,
+				A9F748BC85894850B45FD849 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -247,18 +251,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "National University of Singapore Design Centric Program";
 				TargetAttributes = {
 					3C67AA4F1D85BB56001B3455 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					3C67AA661D85BB56001B3455 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 3C67AA4F1D85BB56001B3455;
 					};
 					3C67AA711D85BB56001B3455 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 3C67AA4F1D85BB56001B3455;
 					};
 				};
@@ -341,6 +348,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickStartAppUITests/Pods-QuickStartAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A9F748BC85894850B45FD849 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickStartAppUITests/Pods-QuickStartAppUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AD7C0A522D8C4AB6F25F6C1B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,7 +390,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DD24D4B41769021D27EACAC4 /* [CP] Embed Pods Frameworks */ = {
@@ -398,7 +420,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E8721E3F13A9783150BC3721 /* [CP] Check Pods Manifest.lock */ = {
@@ -413,7 +435,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FAFDC51B688B0D163954D2ED /* [CP] Embed Pods Frameworks */ = {
@@ -441,6 +463,7 @@
 				3C67AA561D85BB56001B3455 /* ViewController.swift in Sources */,
 				3C67AA5C1D85BB56001B3455 /* QuickStartApp.xcdatamodeld in Sources */,
 				3CDB8BF61D88086600925373 /* FileSaveHelper.swift in Sources */,
+				3CEE42251D9C1382007C7109 /* DateHelper.swift in Sources */,
 				3C67AA541D85BB56001B3455 /* AppDelegate.swift in Sources */,
 				3CDB8BF81D88146D00925373 /* FitbitAPiHelper.swift in Sources */,
 			);
@@ -500,6 +523,7 @@
 		3C67AA791D85BB56001B3455 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -511,8 +535,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -545,6 +571,7 @@
 		3C67AA7A1D85BB56001B3455 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -556,8 +583,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -576,6 +605,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -584,11 +614,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA099D0DB943AAEE74224110 /* Pods-QuickStartApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = QuickStartApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -596,11 +628,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADCAB16DF94940463197F752 /* Pods-QuickStartApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = QuickStartApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -613,6 +647,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickStartApp.app/QuickStartApp";
 			};
 			name = Debug;
@@ -626,6 +661,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickStartApp.app/QuickStartApp";
 			};
 			name = Release;
@@ -638,6 +674,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = QuickStartApp;
 			};
 			name = Debug;
@@ -650,6 +687,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = QuickStartApp;
 			};
 			name = Release;

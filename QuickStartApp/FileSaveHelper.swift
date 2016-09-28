@@ -13,9 +13,9 @@ class FileSaveHelper {
     
     //1
     // MARK:- Error Types
-    private enum FileErrors:ErrorType {
-        case JsonNotSerialized
-        case FileNotSaved
+    fileprivate enum FileErrors:Error {
+        case jsonNotSerialized
+        case fileNotSaved
         
     }
     
@@ -29,48 +29,48 @@ class FileSaveHelper {
     
     //3
     // MARK:- Private Properties
-    private let directory:NSSearchPathDirectory
-    private let directoryPath: String
-    private let fileManager = NSFileManager.defaultManager()
-    private let fileName:String
-    private let filePath:String
-    private let fullyQualifiedPath:String
-    private let subDirectory:String
+    fileprivate let directory:FileManager.SearchPathDirectory
+    fileprivate let directoryPath: String
+    fileprivate let fileManager = FileManager.default
+    fileprivate let fileName:String
+    fileprivate let filePath:String
+    fileprivate let fullyQualifiedPath:String
+    fileprivate let subDirectory:String
     
     //1
     var fileExists:Bool {
         get {
-            return fileManager.fileExistsAtPath(fullyQualifiedPath)
+            return fileManager.fileExists(atPath: fullyQualifiedPath)
         }
     }
     
     var directoryExists:Bool {
         get {
             var isDir = ObjCBool(true)
-            return fileManager.fileExistsAtPath(filePath, isDirectory: &isDir )
+            return fileManager.fileExists(atPath: filePath, isDirectory: &isDir )
         }
     }
     
     //2
-    init(fileName:String, fileExtension:FileExension, subDirectory:String, directory:NSSearchPathDirectory){
+    init(fileName:String, fileExtension:FileExension, subDirectory:String, directory:FileManager.SearchPathDirectory){
         self.fileName = fileName + fileExtension.rawValue
         self.subDirectory = "/\(subDirectory)"
         self.directory = directory
         //3
-        self.directoryPath = NSSearchPathForDirectoriesInDomains(directory, .UserDomainMask, true)[0]
+        self.directoryPath = NSSearchPathForDirectoriesInDomains(directory, .userDomainMask, true)[0]
         self.filePath = directoryPath + self.subDirectory
         self.fullyQualifiedPath = "\(filePath)/\(self.fileName)"
         //4
-        print(self.directoryPath)
+        print(self.fullyQualifiedPath)
         createDirectory()
     }
     
-    private func createDirectory(){
+    fileprivate func createDirectory(){
         //1
         if !directoryExists {
             do {
                 //2
-                try fileManager.createDirectoryAtPath(filePath, withIntermediateDirectories: false, attributes: nil)
+                try fileManager.createDirectory(atPath: filePath, withIntermediateDirectories: false, attributes: nil)
             }
             catch {
                 print("An Error was generated creating directory")
@@ -92,35 +92,36 @@ class FileSaveHelper {
     
     //for json file
     //1
-    func saveFile(dataForJson dataForJson:AnyObject) throws{
+    func saveFile(dataForJson:AnyObject) throws{
         do {
             //2
             let jsonData = try convertObjectToData(dataForJson)
-            if !fileManager.createFileAtPath(fullyQualifiedPath, contents: jsonData, attributes: nil){
+            if !fileManager.createFile(atPath: fullyQualifiedPath, contents: jsonData, attributes: nil){
                 print(fullyQualifiedPath)
-                throw FileErrors.FileNotSaved
+                print(self.fileName)
+                throw FileErrors.fileNotSaved
                 
             }
         } catch {
             //3
             print(error)
-            throw FileErrors.FileNotSaved
+            throw FileErrors.fileNotSaved
         }
         
     }
     
     //4
-    private func convertObjectToData(data:AnyObject) throws -> NSData {
+    fileprivate func convertObjectToData(_ data:AnyObject) throws -> Data {
         
         do {
             //5
-            let newData = try NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
+            let newData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
             return newData
         }
             //6
         catch {
             print("Error writing data: \(error)")
         }
-        throw FileErrors.JsonNotSerialized
+        throw FileErrors.jsonNotSerialized
     }
 }
