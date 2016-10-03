@@ -37,10 +37,17 @@ class FitbitAPIHelper
     // 4 weeks data
     var download_step_counter: Int = 0
     var download_heart_counter: Int = 0
-    let download_date_list = ["2016-09-05", "2016-09-06", "2016-09-07", "2016-09-08", "2016-09-09",
+    /*let download_date_list = ["2016-09-05", "2016-09-06", "2016-09-07", "2016-09-08", "2016-09-09",
                               "2016-09-10", "2016-09-11", "2016-09-12", "2016-09-13", "2016-09-14",
                               "2016-09-15", "2016-09-16", "2016-09-17", "2016-09-18", "2016-09-19",
-                              "2016-09-20", "2016-09-21", "2016-09-22", "2016-09-23", "2016-09-24", "2016-09-25"]
+                              "2016-09-20", "2016-09-21", "2016-09-22", "2016-09-23", "2016-09-24", "2016-09-25"]*/
+    let download_date_list = ["2016-08-01", "2016-08-02", "2016-08-03", "2016-08-04",
+                              "2016-08-05", "2016-08-06", "2016-08-07", "2016-08-08", "2016-08-09",
+                              "2016-08-10", "2016-08-11", "2016-08-12", "2016-08-13", "2016-08-14",
+                              "2016-08-15", "2016-08-16", "2016-08-17", "2016-08-18", "2016-08-19",
+                              "2016-08-20", "2016-08-21", "2016-08-22", "2016-08-23", "2016-08-24",
+                              "2016-08-25", "2016-08-26", "2016-08-27", "2016-08-28", "2016-08-29",
+                              "2016-08-30", "2016-08-31", "2016-09-01", "2016-09-02", "2016-09-03"]
     
     // 5: make API call
     // TODO: need a completion handler
@@ -91,7 +98,7 @@ class FitbitAPIHelper
                 }
                 // print(response.response?.statusCode)
                 if let heartJSON = response.result.value {
-                    self.download_step_counter += 1
+                    self.download_heart_counter += 1
                     let savedData = FileSaveHelper(fileName:download_heart_filename, fileExtension: .JSON, subDirectory: "FitbitData", directory: .documentDirectory)
                     do {
                         try savedData.saveFile(dataForJson: heartJSON as AnyObject)
