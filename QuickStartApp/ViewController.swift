@@ -48,7 +48,7 @@ class ViewController: UIViewController
                                 stepLoop()
                             }
                             if counter == loop_length {
-                                FitbitAPIHelper.sharedInstance.download_step_counter = 0
+                                // FitbitAPIHelper.sharedInstance.download_step_counter = 0
                             }
                         }
                         /*NotificationCenter.default.post(name: Notification.Name(rawValue: "data has been stored"), object: json)*/
@@ -68,7 +68,8 @@ class ViewController: UIViewController
                                 heartLoop()
                             }
                             if counter == loop_length {
-                                FitbitAPIHelper.sharedInstance.download_heart_counter = 0
+                                // check if all files are received here
+                                // FitbitAPIHelper.sharedInstance.download_heart_counter = 0
                                 print("Now heart file downloading counter is set to: \(FitbitAPIHelper.sharedInstance.download_heart_counter)")
                             }
                         }
