@@ -1,6 +1,0 @@
-framework module Pods_QuickStartAppUITests {
-  umbrella header "Pods-QuickStartAppUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

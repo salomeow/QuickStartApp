@@ -7,7 +7,7 @@ target 'QuickStartApp' do
   use_frameworks!
    pod 'Alamofire', '~> 4.0'
    pod 'SwiftyJSON', '~> 3.0.0'
-
+   pod 'GoogleSignIn'
   # Pods for QuickStartApp
 
   target 'QuickStartAppTests' do

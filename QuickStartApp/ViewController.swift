@@ -27,6 +27,7 @@ class ViewController: UIViewController
         loadInitialData()
     }
     
+    
     func loadInitialData()
     {
         if (!FitbitAPIHelper.sharedInstance.hasToken())
@@ -80,6 +81,14 @@ class ViewController: UIViewController
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    ////// TODO
     @IBAction func SyncFitbit(_ sender: AnyObject)
     {
         // press button to sync fitbit data. note that the rate limit is 150.check response header for number of requests left and countdown to next 150 requests.
