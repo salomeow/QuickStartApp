@@ -37,7 +37,7 @@ class FitbitAPIHelper
     // 4 weeks data
     var download_step_counter: Int = 0
     var download_heart_counter: Int = 0
-    let download_date_list = DateHelper().get_date_list(date_range_n: 60)
+    let download_date_list = DateHelper().get_date_list(date_range_n: 30)
     
     // 5: make API call
     // TODO: need a completion handler

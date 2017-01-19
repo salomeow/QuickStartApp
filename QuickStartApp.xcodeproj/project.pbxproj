@@ -8,11 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B44713546AC1A4692D76E8D /* Pods_QuickStartAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A13FBA48BADC4AD74141F7 /* Pods_QuickStartAppTests.framework */; };
-		3C4E14651E266CCC00B3E269 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E14641E266CCC00B3E269 /* GoogleAppUtilities.framework */; };
-		3C4E146A1E266CDE00B3E269 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E14661E266CDE00B3E269 /* GoogleSignIn.framework */; };
-		3C4E146B1E266CDE00B3E269 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E14671E266CDE00B3E269 /* GoogleSignInDependencies.framework */; };
-		3C4E146C1E266CDE00B3E269 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E14681E266CDE00B3E269 /* GoogleSymbolUtilities.framework */; };
-		3C4E146D1E266CDE00B3E269 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3C4E14691E266CDE00B3E269 /* GoogleSignIn.bundle */; };
 		3C4E14701E266D3F00B3E269 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E146F1E266D3F00B3E269 /* SafariServices.framework */; };
 		3C4E14721E266D4B00B3E269 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4E14711E266D4B00B3E269 /* SystemConfiguration.framework */; };
 		3C67AA541D85BB56001B3455 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA531D85BB56001B3455 /* AppDelegate.swift */; };
@@ -23,6 +18,8 @@
 		3C67AA611D85BB56001B3455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C67AA5F1D85BB56001B3455 /* LaunchScreen.storyboard */; };
 		3C67AA6C1D85BB56001B3455 /* QuickStartAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA6B1D85BB56001B3455 /* QuickStartAppTests.swift */; };
 		3C67AA771D85BB56001B3455 /* QuickStartAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AA761D85BB56001B3455 /* QuickStartAppUITests.swift */; };
+		3C8287611E30598F00B217B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C82875F1E30598F00B217B6 /* GoogleService-Info.plist */; };
+		3C8287621E30598F00B217B6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8287601E30598F00B217B6 /* Info.plist */; };
 		3CB2CF061E0C143C009ECAB0 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2CF051E0C143C009ECAB0 /* DateHelper.swift */; };
 		3CDB8BF61D88086600925373 /* FileSaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF51D88086600925373 /* FileSaveHelper.swift */; };
 		3CDB8BF81D88146D00925373 /* FitbitAPiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */; };
@@ -48,12 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3C4E14641E266CCC00B3E269 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
-		3C4E14661E266CDE00B3E269 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
-		3C4E14671E266CDE00B3E269 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
-		3C4E14681E266CDE00B3E269 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
-		3C4E14691E266CDE00B3E269 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
-		3C4E146E1E266D0E00B3E269 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		3C4E146F1E266D3F00B3E269 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		3C4E14711E266D4B00B3E269 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C67AA501D85BB56001B3455 /* QuickStartApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickStartApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,7 +54,6 @@
 		3C67AA5B1D85BB56001B3455 /* QuickStartApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuickStartApp.xcdatamodel; sourceTree = "<group>"; };
 		3C67AA5D1D85BB56001B3455 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C67AA601D85BB56001B3455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3C67AA621D85BB56001B3455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C67AA671D85BB56001B3455 /* QuickStartAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickStartAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C67AA6B1D85BB56001B3455 /* QuickStartAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartAppTests.swift; sourceTree = "<group>"; };
 		3C67AA6D1D85BB56001B3455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,6 +61,8 @@
 		3C67AA761D85BB56001B3455 /* QuickStartAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartAppUITests.swift; sourceTree = "<group>"; };
 		3C67AA781D85BB56001B3455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C67AA861D866375001B3455 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Alamofire.framework; path = "/Users/ywang/Library/Developer/Xcode/DerivedData/QuickStartApp-dqdqomnwhktrfxbggpgwvuhzwbwh/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<absolute>"; };
+		3C82875F1E30598F00B217B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3C8287601E30598F00B217B6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CB2CF051E0C143C009ECAB0 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		3CDB8BF51D88086600925373 /* FileSaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSaveHelper.swift; sourceTree = "<group>"; };
 		3CDB8BF71D88146D00925373 /* FitbitAPiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPiHelper.swift; sourceTree = "<group>"; };
@@ -92,10 +84,6 @@
 			files = (
 				3C4E14721E266D4B00B3E269 /* SystemConfiguration.framework in Frameworks */,
 				3C4E14701E266D3F00B3E269 /* SafariServices.framework in Frameworks */,
-				3C4E14651E266CCC00B3E269 /* GoogleAppUtilities.framework in Frameworks */,
-				3C4E146A1E266CDE00B3E269 /* GoogleSignIn.framework in Frameworks */,
-				3C4E146C1E266CDE00B3E269 /* GoogleSymbolUtilities.framework in Frameworks */,
-				3C4E146B1E266CDE00B3E269 /* GoogleSignInDependencies.framework in Frameworks */,
 				B67FF9B4898CA9443B94C3B3 /* Pods_QuickStartApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,12 +123,6 @@
 		3C67AA471D85BB56001B3455 = {
 			isa = PBXGroup;
 			children = (
-				3C4E146E1E266D0E00B3E269 /* GoogleSignIn.bundle */,
-				3C4E14661E266CDE00B3E269 /* GoogleSignIn.framework */,
-				3C4E14671E266CDE00B3E269 /* GoogleSignInDependencies.framework */,
-				3C4E14681E266CDE00B3E269 /* GoogleSymbolUtilities.framework */,
-				3C4E14691E266CDE00B3E269 /* GoogleSignIn.bundle */,
-				3C4E14641E266CCC00B3E269 /* GoogleAppUtilities.framework */,
 				3C67AA861D866375001B3455 /* Alamofire.framework */,
 				3C67AA521D85BB56001B3455 /* QuickStartApp */,
 				3C67AA6A1D85BB56001B3455 /* QuickStartAppTests */,
@@ -172,8 +154,9 @@
 				3C67AA571D85BB56001B3455 /* Main.storyboard */,
 				3C67AA5D1D85BB56001B3455 /* Assets.xcassets */,
 				3C67AA5F1D85BB56001B3455 /* LaunchScreen.storyboard */,
-				3C67AA621D85BB56001B3455 /* Info.plist */,
 				3C67AA5A1D85BB56001B3455 /* QuickStartApp.xcdatamodeld */,
+				3C82875F1E30598F00B217B6 /* GoogleService-Info.plist */,
+				3C8287601E30598F00B217B6 /* Info.plist */,
 			);
 			path = QuickStartApp;
 			sourceTree = "<group>";
@@ -285,7 +268,7 @@
 				TargetAttributes = {
 					3C67AA4F1D85BB56001B3455 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 					};
 					3C67AA661D85BB56001B3455 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -324,9 +307,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C4E146D1E266CDE00B3E269 /* GoogleSignIn.bundle in Resources */,
 				3C67AA611D85BB56001B3455 /* LaunchScreen.storyboard in Resources */,
+				3C8287611E30598F00B217B6 /* GoogleService-Info.plist in Resources */,
 				3C67AA5E1D85BB56001B3455 /* Assets.xcassets in Resources */,
+				3C8287621E30598F00B217B6 /* Info.plist in Resources */,
 				3C67AA591D85BB56001B3455 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,6 +630,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/google_signin_sdk_4_0_1",
@@ -659,6 +644,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickStartApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -669,6 +656,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/google_signin_sdk_4_0_1",
@@ -682,6 +670,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nusdcp.QuickStartApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickStartApp-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

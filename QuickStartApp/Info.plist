@@ -21,8 +21,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>nusdcp2016</string>
+			<string>fitbit</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>nusdcp2016</string>
@@ -36,6 +38,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.875488668766-0qgcldc2v3t1b495ea3o5oqstirnnsan</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>bundleid</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nusdcp.QuickStartApp</string>
 			</array>
 		</dict>
 	</array>
