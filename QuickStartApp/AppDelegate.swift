@@ -11,34 +11,23 @@ import CoreData
 import Alamofire
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-        
+
     // 2
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         // Override point for customization after application launch.
         // first function to execute when the app is launched.
         print ("hello")
-        
-        // Initialize Google sign-in
-        var configureError: NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        
-        // replace GIDSignIn.sharedInstance().delegate = self with the following line?
-        GIDSignIn.sharedInstance().clientID = "875488668766-0qgcldc2v3t1b495ea3o5oqstirnnsan.apps.googleusercontent.com"
-        
         return true
     }
     
     // indicate this app can open url
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool
     {
-
         // 3: get authorization code
-        print(url)
         FitbitAPIHelper.sharedInstance.startFitbitOAuth2Flow(url)
         print("end application open url")
         return true
